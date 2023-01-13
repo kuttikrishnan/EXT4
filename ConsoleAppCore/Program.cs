@@ -1,7 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using SharpExt4;
-
-Console.WriteLine("Hello, World!");
+//using SharpExt4;
+using EXTClassLib;
+Console.WriteLine("Directory Names...");
+Console.WriteLine("**********************");
 
 DisplayEXT4FileSystem();
 
@@ -12,13 +13,18 @@ static void DisplayEXT4FileSystem()
     var filePath ="home";
     try
     {
-        Console.WriteLine($"Start Executing.... For Disk Number -> {diskNumber}  & Partition Number -> {partitionNumer}");
-        var disk = ExtDisk.Open(diskNumber);
-        var fs = ExtFileSystem.Open(disk, disk.Partitions[partitionNumer]);
-        int fileCounter = 0;
+        var files = EXT4Cls.HitEXT4(filePath, diskNumber,partitionNumer);
+        foreach (var file in files)
+        {
+            Console.WriteLine(file);
+        }
+        //Console.WriteLine($"Start Executing.... For Disk Number -> {diskNumber}  & Partition Number -> {partitionNumer}");
+        //var disk = ExtDisk.Open(diskNumber);
+        //var fs = ExtFileSystem.Open(disk, disk.Partitions[partitionNumer]);
+        //int fileCounter = 0;
 
-        //Copy only images from Source to Destination Path.
-        fileCounter = DisplayFiles( fs, fileCounter, filePath);
+        ////Copy only images from Source to Destination Path.
+        //fileCounter = DisplayFiles( fs, fileCounter, filePath);
 
         Console.Write("\n\n Process completed successfully! Close this command prompt window and remove the card");
         Console.Read();
@@ -32,51 +38,51 @@ static void DisplayEXT4FileSystem()
 
 }
 
-static int DisplayFiles(ExtFileSystem fs, int fileCounter, string directory)
-{
-    int counter = 0;
-    string fileName = "";
-    Console.WriteLine($"Source Directory Path : {directory}");
-    try
-    {
-        string[] directories = null;
+//static int DisplayFiles(ExtFileSystem fs, int fileCounter, string directory)
+//{
+//    int counter = 0;
+//    string fileName = "";
+//    Console.WriteLine($"Source Directory Path : {directory}");
+//    try
+//    {
+//        string[] directories = null;
 
-        if (!fs.DirectoryExists(directory))
-            throw new AccessViolationException($"{directory} is not exist");
+//        if (!fs.DirectoryExists(directory))
+//            throw new AccessViolationException($"{directory} is not exist");
 
-        directories = fs.GetDirectories(directory, "*", SearchOption.AllDirectories);
-        if (directories.Length > 0)
-        {
+//        directories = fs.GetDirectories(directory, "*", SearchOption.AllDirectories);
+//        if (directories.Length > 0)
+//        {
 
-            Console.WriteLine("Available Directoies");
-            Console.WriteLine("********************");
-            foreach (var folder in directories)
-            {
-                try
-                {
-                    fileCounter = fileCounter + 1;
-                    Console.WriteLine($"DirectoryName : {folder}");
-                    counter++;
+//            Console.WriteLine("Available Directoies");
+//            Console.WriteLine("********************");
+//            foreach (var folder in directories)
+//            {
+//                try
+//                {
+//                    fileCounter = fileCounter + 1;
+//                    Console.WriteLine($"DirectoryName : {folder}");
+//                    counter++;
 
-                }
-                catch (Exception ex)
-                {
-                }
-            }
-        }
-        else
-        {
-            Console.WriteLine($"There are no sub directoies present under {directory}");
-        }
-        return fileCounter;
+//                }
+//                catch (Exception ex)
+//                {
+//                }
+//            }
+//        }
+//        else
+//        {
+//            Console.WriteLine($"There are no sub directoies present under {directory}");
+//        }
+//        return fileCounter;
 
-    }
-    catch (Exception ex)
-    {
+//    }
+//    catch (Exception ex)
+//    {
 
-        throw ex;
-    }
+//        throw ex;
+//    }
 
-}
+//}
 
 

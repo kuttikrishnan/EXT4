@@ -1,0 +1,89 @@
+﻿@using EXTClassLib
+
+<h3>BaseView</h3>
+
+<div class="row">
+
+    <div class="column">
+
+        <ul>
+            @if (folderList != null && folderList.Length > 0)
+            {
+                @foreach (var item in folderList)
+                {
+                    <li>@item</li>
+                }
+            }
+            else
+            {
+                <div>@exception</div>
+            }
+        </ul>
+
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public string FolderPath { get; set; }
+
+    [Parameter]
+    public EventCallback<string> onCheckboxValueChanged { get; set; }
+
+    public List<string> SelectedFiles;
+
+    public string[] folderList;
+
+    public string exception;
+
+    //public FolderHierarchy folderHierarchy = new FolderHierarchy();
+
+    protected override void OnInitialized()
+    {
+        exception = "No Exception...";
+        try
+        {
+            int diskNumber = 1;
+            int partitionNumer = 1;
+            var filePath = "home";
+            folderList = EXT4Cls.HitEXT4(filePath, diskNumber, partitionNumer);
+
+        }
+        catch (Exception ex)
+        {
+            exception = ex.Message;
+        }
+
+        //var disk = ExtDisk.Open(1);
+        //var fs = ExtFileSystem.Open(disk, disk.Partitions[1]);
+        //folderHierarchy = GetFolderHierarchy(FolderPath);
+    }
+
+
+    //private FolderHierarchy GetFolderHierarchy(string dirName)
+    //{
+    //    //var disk = ExtDisk.Open(1);
+    //    //var fs = ExtFileSystem.Open(disk, disk.Partitions[1]);
+    //    //var directories = fs.GetDirectories("/home/", "*", SearchOption.AllDirectories);
+    //    //var files = fs.GetFiles(dirName,"*",SearchOption.TopDirectoryOnly);
+    //    var directories = Directory.GetDirectories(dirName);
+    //    var files = Directory.GetFiles(dirName, "*", SearchOption.TopDirectoryOnly);
+
+    //    List<FolderHierarchy> listOfFolders = new List<FolderHierarchy>();
+    //    List<FileData> fileData = new List<FileData>();
+    //    foreach (var file in files)
+    //    {
+    //        fileData.Add(new FileData() { FileName = file, IsSelected = false });
+    //    }
+    //    foreach (var dir in directories)
+    //    {
+    //        listOfFolders.Add(GetFolderHierarchy(dir));
+    //    }
+
+    //    FolderHierarchy folderHierarchy = new FolderHierarchy() { Name = dirName, Files = fileData, subFolders = listOfFolders, IsSelected = false };
+
+    //    return folderHierarchy;
+    //}
+
+}

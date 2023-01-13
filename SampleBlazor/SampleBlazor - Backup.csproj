@@ -38,7 +38,8 @@
         <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
         <PackageCertificateThumbprint>31CC8777218849355BD14BD2F8646FF7FD72153A</PackageCertificateThumbprint>
         <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-        <PlatformTarget>x64</PlatformTarget>
+        <PlatformTarget>x86</PlatformTarget>
+        <RuntimeIdentifier>win10-x86</RuntimeIdentifier>
     </PropertyGroup>
     <PropertyGroup Condition="$(TargetFramework.Contains('-windows')) and '$(Configuration)' == 'Debug' and $(PlatformTarget)=='x86'">
     <Platforms>x86</Platforms>
